@@ -1,0 +1,23 @@
+/* Table of Contents
+S1. General
+S2. Header
+S3. Main
+S4. Code Quiz
+S5. High Scores
+*/
+
+/* S1. General */
+body {
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+/* S2. Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    margin: 3% 5%;
+}
+
+#high-scores-text {
+    color: blueviolet;
+}
