@@ -7,8 +7,31 @@ S5. High Scores
 */
 
 /* S1. General */
+:root {
+    --color1: #351c75;
+    --color2: #bd60e7;
+}
+
 body {
     font-family: Helvetica, Arial, sans-serif;
+}
+
+button {
+    border: none;
+    font-size: 20px;
+    padding: 13px 25px;
+    color: white;
+    background-color: var(--color1);
+    border-radius: 10px;
+}
+
+button:hover {
+    background-color: var(--color2);
+    cursor: pointer;
+}
+
+button:active {
+    box-shadow: 0 0 3px black;
 }
 
 /* S2. Header */
@@ -16,8 +39,30 @@ header {
     display: flex;
     justify-content: space-between;
     margin: 3% 5%;
+    font-size: 20px;
 }
 
 #high-scores-text {
-    color: blueviolet;
+    color: var(--color2);
+}
+
+#high-scores:hover {
+    cursor: pointer;
+}
+
+/* S3. Main */
+main {
+    text-align: center;
+    margin: 0 20%;
+}
+
+#main-content {
+    font-size: 20px;
+    line-height: 1.5;
+    text-align: center;
+}
+
+#main-content button {
+    display: block;
+    margin: 5% auto;
 }
