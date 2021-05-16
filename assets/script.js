@@ -69,26 +69,53 @@ var runQuiz = function() {
 
     timer();
 
-    // while (questionsLeft > 0) {
-    //     if (timeLeft <= 0) {
-    //         mainTextEl.textContent = "Out of time!";
-    //         tempScore = timeLeft;
-    //         break;
-    //     } 
+    // Primary game logic
+    var i = 0; // used only for iterating over the array of questions
+    while (questionsLeft > 0) {
+        if (timeLeft <= 0) {
+            mainTextEl.textContent = "Out of time!";
+            tempScore = timeLeft;
+            break;
+        } 
 
-    //     var i = 0;
-    //     mainTextEl.textContent = questions[i].text;
+        // Display the question's text and answers
 
-    // }
+        mainTextEl.textContent = questions[i].text;
+        mainContentEl.innerHTML = "<ul class='answers' id='answers'><ul>";
 
-    // tempScore = timeLeft;
+        // Add answer buttons
+        for (var j = 0; j < questions[i].answers.length; j++) {
+            var answerButton = document.createElement("button");
+            answerButton.textContent = questions[i].answers[j];
+            answerButton.setAttribute("class", "answerButton");
+            answerButton.setAttribute("id", [j]);
+
+            // Set which button is the correct answer
+            if (questions[i].correct === j) {
+                answerButton.setAttribute("correct", "true");
+            } else {
+                answerButton.setAttribute("correct", "false");
+            }
+
+            // Append to the <ul>
+            var answersList = document.querySelector("#answers");
+            answersList.appendChild(answerButton);
+
+            debugger;
+        }
+        i++;    // Used locally to iterate over the array of questions
+        questionsLeft--; // Global, checked by both the while loop and timer()
+        debugger;
+    }
+
+    tempScore = timeLeft;
 
     
 }
 
 var timer = function() {
     timeNumberEl.textContent = timeLeft;
-    timeLeft = timeLeft - 1;
+    timeLeft = timeLeft - 1; // kludge to account for the first interval ticking before timeLeft is updated
     var countdown = function() {
         if (timeLeft > 0 && questionsLeft > 0) {
             timeNumberEl.textContent = timeLeft;
