@@ -77,7 +77,10 @@ var showHighScores = function() {
 var endScreen = function() {
     tempScore = timeLeft;
     clearScreen();
-    mainTextEl.textContent = "Your score: " + tempScore;
+    mainTextEl.textContent = "All done!";
+    mainContentEl.innerHTML = "<form class='end-form'><p>Your final score is " + tempScore + ".</p>Enter initials: " +  
+        "<input type='text' name='initials' class='initials' placeholder='ABC' /></form>" + 
+        "<button class='score-button' id='submit-score' type='submit'>Submit</button>";
 }
 
 // S2-c. Quiz Functions
