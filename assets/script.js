@@ -22,8 +22,8 @@ var timeLeft = 75;
 var tempScore = 0;
 var scores = [];
 var correctAnswer = "";
-var questionNumber = 0;
 var i = 0; // iterator for main quiz logic
+var timerInterval;
 
 // S1-c. Quiz Questions Array
 var questions = [
@@ -43,7 +43,6 @@ var questions = [
         correct: 3
     }
 ];
-var questionsLeft = questions.length;
 
 // S2. Functions
 // S2-a. Utility
@@ -51,7 +50,10 @@ var clearScreen = function() {
     mainTextEl.textContent = "";
     mainContentEl.textContent = "";
     timeNumberEl.textContent = "0";
-    questionsLeft = questions.length;
+    i = 0;
+    correctAnswer = "";
+    clearInterval(timerInterval);
+    timeLeft = 75;
 }
 
 // S2-b. Non-Quiz Sections
@@ -87,7 +89,6 @@ var runQuiz = function() {
 var quizLoop = function() {
     // End the game if no more time or questions left
     if (timeLeft <= 0) {
-        mainTextEl.textContent = "Out of time!";
         endScreen();
         return;
     } 
@@ -96,15 +97,17 @@ var quizLoop = function() {
         return;
     }
 
-    // Display the question's text and answers
+    // Display the question's text and answers, and whether the previous answer was correct
     mainTextEl.textContent = questions[i].text;
-    mainContentEl.innerHTML = "<ul class='answers' id='answers'><ul>";
+    mainContentEl.innerHTML = "<ul class='answers' id='answers'></ul><h2 id='correct-or-not'></h2>";
+    var correctOrNot = document.querySelector("#correct-or-not");
+    correctOrNot.textContent = correctAnswer;
+
 
     // Add answer buttons
     for (var j = 0; j < questions[i].answers.length; j++) {
         var answerButton = document.createElement("button");
         answerButton.textContent = questions[i].answers[j];
-        answerButton.setAttribute("class", "answer-button");
         answerButton.setAttribute("id", j);
 
         // Set which button is the correct answer
@@ -135,7 +138,7 @@ var timer = function() {
             clearInterval(timerInterval);
         }
     }
-    var timerInterval = setInterval(countdown, 1000);
+    timerInterval = setInterval(countdown, 1000);
 }
 
 var answerHandler = function(event) {
