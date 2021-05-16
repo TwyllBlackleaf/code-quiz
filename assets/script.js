@@ -22,6 +22,10 @@ var correctDisplayEl = document.querySelector("#correct-answer-display");
 var timeLeft = 75;
 var tempScore = 0;
 var scores = [];
+var scoreObj = {
+    initials: "",
+    score: 0
+};
 var correctAnswer = "";
 var i = 0; // iterator for main quiz logic
 var timerInterval;
@@ -78,9 +82,25 @@ var endScreen = function() {
     tempScore = timeLeft;
     clearScreen();
     mainTextEl.textContent = "All done!";
-    mainContentEl.innerHTML = "<form class='end-form'><p>Your final score is " + tempScore + ".</p>Enter initials: " +  
-        "<input type='text' name='initials' class='initials' placeholder='ABC' /></form>" + 
-        "<button class='score-button' id='submit-score' type='submit'>Submit</button>";
+    mainContentEl.innerHTML = "<form class='end-form' id='end-form'><p>Your final score is " + tempScore + ".</p>Enter initials: " +  
+        "<input type='text' name='initials' class='initials' placeholder='ABC' />" + 
+        "<button class='score-button' id='submit-score' type='submit'>Submit</button></form>";
+    var submitFormEl = document.querySelector("#end-form");
+    submitFormEl.addEventListener("submit", saveScore);
+}
+
+var saveScore = function(event) {
+    event.preventDefault();
+    scoreObj.initials = document.querySelector("input[name='initials']").value;
+    if (!scoreObj.initials) {
+        alert("Please enter initials.");
+    } else if (scoreObj.initials.length > 7) {
+        alert("Keep it shorter!");
+    } else {
+        scoreObj.score = tempScore;
+
+        console.log(scoreObj);
+    }
 }
 
 // S2-c. Quiz Functions
@@ -102,7 +122,7 @@ var quizLoop = function() {
         return;
     }
 
-    // Display the question's text and answers, and whether the previous answer was correct
+    // Display the question's text
     mainTextEl.textContent = questions[i].text;
     mainContentEl.innerHTML = "<ul class='answers' id='answers'></ul>";
 
