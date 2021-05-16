@@ -16,6 +16,7 @@ var mainTextEl = document.querySelector("#main-text");
 var mainContentEl = document.querySelector("#main-content");
 var timeNumberEl = document.querySelector("#timer-number");
 var highScoresEl = document.querySelector("#high-scores");
+var correctDisplayEl = document.querySelector("#correct-answer-display");
 
 // S1-b. Global Variables
 var timeLeft = 75;
@@ -82,6 +83,7 @@ var endScreen = function() {
 // S2-c. Quiz Functions
 var runQuiz = function() {
     clearScreen();
+    tempScore = 0;
     timer(); 
     quizLoop();
 }
@@ -99,10 +101,7 @@ var quizLoop = function() {
 
     // Display the question's text and answers, and whether the previous answer was correct
     mainTextEl.textContent = questions[i].text;
-    mainContentEl.innerHTML = "<ul class='answers' id='answers'></ul><h2 id='correct-or-not'></h2>";
-    var correctOrNot = document.querySelector("#correct-or-not");
-    correctOrNot.textContent = correctAnswer;
-
+    mainContentEl.innerHTML = "<ul class='answers' id='answers'></ul>";
 
     // Add answer buttons
     for (var j = 0; j < questions[i].answers.length; j++) {
@@ -150,7 +149,17 @@ var answerHandler = function(event) {
         timeLeft -= 10;
     }
     i++;
+    displayCorrect();
     quizLoop();
+}
+
+var displayCorrect = function() {
+    // Briefly display if the previous answer was correct or not
+    correctDisplayEl.innerHTML = "<h2 class='correct-display'>" + correctAnswer + "</h2>";
+    var clearDisplay = function() {
+        correctDisplayEl.textContent = "";
+    }
+    setTimeout(clearDisplay, 1000);
 }
 
 // S3. Event Listeners
