@@ -1,7 +1,8 @@
 // Table of Contents
 // S1. Page Elements and Variables
 //  S1-a. Page Elements
-//  S1-b. Quiz Questions Array
+//  S1-b. Global Variables
+//  S1-c. Quiz Questions Array
 // S2. Functions
 // S3. Event Listeners
 // S4. Main Logic
@@ -13,7 +14,12 @@ var mainContentEl = document.querySelector("#main-content");
 var timeNumberEl = document.querySelector("#timer-number");
 var highScoresEl = document.querySelector("#high-scores");
 
-// S1-b. Quiz Questions Array
+// S1-b. Global Variables
+var timeLeft = 75;
+var tempScore = 0;
+var scores = [];
+
+// S1-c. Quiz Questions Array
 var questions = [
     {
         text: "Foo",
@@ -31,12 +37,14 @@ var questions = [
         correct: 3
     }
 ];
+var questionsLeft = questions.length;
 
 // S2. Functions
 var clearScreen = function() {
     mainTextEl.textContent = "";
     mainContentEl.textContent = "";
     timeNumberEl.textContent = "0";
+    questionsLeft = questions.length;
 }
 
 var startScreen = function() {
@@ -59,25 +67,39 @@ var runQuiz = function() {
     console.log("Quiz start");
     clearScreen();
 
-    // Timer
-    var timeLeft = 75;
+    timer();
+
+    // while (questionsLeft > 0) {
+    //     if (timeLeft <= 0) {
+    //         mainTextEl.textContent = "Out of time!";
+    //         tempScore = timeLeft;
+    //         break;
+    //     } 
+
+    //     var i = 0;
+    //     mainTextEl.textContent = questions[i].text;
+
+    // }
+
+    // tempScore = timeLeft;
+
+    
+}
+
+var timer = function() {
     timeNumberEl.textContent = timeLeft;
+    timeLeft = timeLeft - 1;
     var countdown = function() {
-        if (timeLeft > 0) {
+        if (timeLeft > 0 && questionsLeft > 0) {
             timeNumberEl.textContent = timeLeft;
             timeLeft--;
         } else {
             timeNumberEl.textContent = 0;
-            clearInterval(timer);
+            clearInterval(timerInterval);
         }
     }
-    var timer = setInterval(countdown, 1000);
-
-    var questionsLeft = questions.length;
+    var timerInterval = setInterval(countdown, 1000);
 }
-
-
-
 
 // S3. Event Listeners
 highScoresEl.addEventListener("click", showHighScores);
