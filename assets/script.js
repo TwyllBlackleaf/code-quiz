@@ -61,6 +61,15 @@ var clearScreen = function() {
     timeLeft = 75;
 }
 
+var saveScores = function() {
+    localStorage.setItem("highScores", JSON.stringify(scores));
+}
+
+var getScores = function() {
+    scores = localStorage.getItem("highScores");
+    scores = JSON.parse(scores);
+}
+
 // S2-b. Non-Quiz Sections
 var startScreen = function() {
     mainTextEl.textContent = "Coding Quiz Challenge";
@@ -76,6 +85,8 @@ var startScreen = function() {
 var showHighScores = function() {
     console.log("High Scores link clicked");
     clearScreen();
+    mainTextEl.textContent = "High Scores";
+    mainContentEl.innerHTML = "";
 }
 
 var endScreen = function() {
@@ -99,7 +110,16 @@ var saveScore = function(event) {
     } else {
         scoreObj.score = tempScore;
 
+        getScores();
+        if (!scores) {
+            scores = [];
+        }
+        scores.push(scoreObj);
+        saveScores();
+
         console.log(scoreObj);
+        console.log(scores);
+        startScreen();
     }
 }
 
