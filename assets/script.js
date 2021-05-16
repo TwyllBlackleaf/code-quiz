@@ -4,6 +4,9 @@
 //  S1-b. Global Variables
 //  S1-c. Quiz Questions Array
 // S2. Functions
+//  S2-a. Utility
+//  S2-b. Non-Quiz Sections
+//  S2-c. Quiz Functions
 // S3. Event Listeners
 // S4. Main Logic
 
@@ -18,6 +21,9 @@ var highScoresEl = document.querySelector("#high-scores");
 var timeLeft = 75;
 var tempScore = 0;
 var scores = [];
+var correctAnswer = "";
+var questionNumber = 0;
+var i = 0; // iterator for main quiz logic
 
 // S1-c. Quiz Questions Array
 var questions = [
@@ -40,6 +46,7 @@ var questions = [
 var questionsLeft = questions.length;
 
 // S2. Functions
+// S2-a. Utility
 var clearScreen = function() {
     mainTextEl.textContent = "";
     mainContentEl.textContent = "";
@@ -47,6 +54,7 @@ var clearScreen = function() {
     questionsLeft = questions.length;
 }
 
+// S2-b. Non-Quiz Sections
 var startScreen = function() {
     mainTextEl.textContent = "Coding Quiz Challenge";
     mainContentEl.textContent = "Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!";
@@ -63,61 +71,63 @@ var showHighScores = function() {
     clearScreen();
 }
 
-var runQuiz = function() {
-    console.log("Quiz start");
+var endScreen = function() {
+    tempScore = timeLeft;
     clearScreen();
+    mainTextEl.textContent = "Your score: " + tempScore;
+}
 
-    timer();
+// S2-c. Quiz Functions
+var runQuiz = function() {
+    clearScreen();
+    timer(); 
+    quizLoop();
+}
 
-    // Primary game logic
-    var i = 0; // used only for iterating over the array of questions
-    while (questionsLeft > 0) {
-        if (timeLeft <= 0) {
-            mainTextEl.textContent = "Out of time!";
-            tempScore = timeLeft;
-            break;
-        } 
-
-        // Display the question's text and answers
-
-        mainTextEl.textContent = questions[i].text;
-        mainContentEl.innerHTML = "<ul class='answers' id='answers'><ul>";
-
-        // Add answer buttons
-        for (var j = 0; j < questions[i].answers.length; j++) {
-            var answerButton = document.createElement("button");
-            answerButton.textContent = questions[i].answers[j];
-            answerButton.setAttribute("class", "answerButton");
-            answerButton.setAttribute("id", [j]);
-
-            // Set which button is the correct answer
-            if (questions[i].correct === j) {
-                answerButton.setAttribute("correct", "true");
-            } else {
-                answerButton.setAttribute("correct", "false");
-            }
-
-            // Append to the <ul>
-            var answersList = document.querySelector("#answers");
-            answersList.appendChild(answerButton);
-
-            debugger;
-        }
-        i++;    // Used locally to iterate over the array of questions
-        questionsLeft--; // Global, checked by both the while loop and timer()
-        debugger;
+var quizLoop = function() {
+    // End the game if no more time or questions left
+    if (timeLeft <= 0) {
+        mainTextEl.textContent = "Out of time!";
+        endScreen();
+        return;
+    } 
+    if (i === questions.length) {
+        endScreen();
+        return;
     }
 
-    tempScore = timeLeft;
+    // Display the question's text and answers
+    mainTextEl.textContent = questions[i].text;
+    mainContentEl.innerHTML = "<ul class='answers' id='answers'><ul>";
 
-    
+    // Add answer buttons
+    for (var j = 0; j < questions[i].answers.length; j++) {
+        var answerButton = document.createElement("button");
+        answerButton.textContent = questions[i].answers[j];
+        answerButton.setAttribute("class", "answer-button");
+        answerButton.setAttribute("id", j);
+
+        // Set which button is the correct answer
+        if (questions[i].correct === j) {
+            answerButton.setAttribute("class", "correct-button");
+        } else {
+            answerButton.setAttribute("class", "wrong-button");
+        }
+
+        // Append to the <ul>
+        var answersList = document.querySelector("#answers");
+        answersList.appendChild(answerButton);
+
+        // Add event listener 
+        answerButton.addEventListener("click", answerHandler);
+    }
 }
 
 var timer = function() {
     timeNumberEl.textContent = timeLeft;
     timeLeft = timeLeft - 1; // kludge to account for the first interval ticking before timeLeft is updated
     var countdown = function() {
-        if (timeLeft > 0 && questionsLeft > 0) {
+        if (timeLeft > 0 && i < questions.length) {
             timeNumberEl.textContent = timeLeft;
             timeLeft--;
         } else {
@@ -126,6 +136,18 @@ var timer = function() {
         }
     }
     var timerInterval = setInterval(countdown, 1000);
+}
+
+var answerHandler = function(event) {
+    console.log(event.target);
+    if (event.target.matches(".correct-button")) {
+        correctAnswer = "Correct!"
+    } else {
+        correctAnswer = "Wrong!"
+        timeLeft -= 10;
+    }
+    i++;
+    quizLoop();
 }
 
 // S3. Event Listeners
