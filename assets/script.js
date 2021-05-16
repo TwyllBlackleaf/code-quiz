@@ -70,6 +70,10 @@ var getScores = function() {
     scores = JSON.parse(scores);
 }
 
+var sortScores = function() {
+
+}
+
 // S2-b. Non-Quiz Sections
 var startScreen = function() {
     mainTextEl.textContent = "Coding Quiz Challenge";
@@ -86,7 +90,18 @@ var showHighScores = function() {
     console.log("High Scores link clicked");
     clearScreen();
     mainTextEl.textContent = "High Scores";
-    mainContentEl.innerHTML = "";
+    var scoresList = document.createElement("ol");
+    scoresList.setAttribute("id", "high-scores");
+    mainContentEl.appendChild(scoresList);
+
+    getScores();
+    for (var i = 0; i < scores.length; i++) {
+        var scoreItem = document.createElement("li");
+        scoreItem.textContent = scores[i].initials + ": " + scores[i].score;
+        scoresList.appendChild(scoreItem);
+    }
+    
+    
 }
 
 var endScreen = function() {
