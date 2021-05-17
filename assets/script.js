@@ -163,7 +163,7 @@ var endScreen = function() {
     mainTextEl.setAttribute("class", "end-screen-main-text");
     mainContentEl.setAttribute("class", "end-screen-main-content");
     mainTextEl.textContent = "All done!";
-    mainContentEl.innerHTML = "<form class='end-form' id='end-form'><p>Your final score is " + tempScore + ".</p>Enter initials: " +  
+    mainContentEl.innerHTML = "<p>Your final score is " + tempScore + ".</p><form class='end-form' id='end-form'><p>Enter initials: </p>" +  
         "<input type='text' name='initials' class='initials' placeholder='ABC' />" + 
         "<button class='score-button' id='submit-score' type='submit'>Submit</button></form>";
     var submitFormEl = document.querySelector("#end-form");

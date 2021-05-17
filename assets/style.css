@@ -91,11 +91,33 @@ header {
 
 /* S5. End Screen */
 .end-screen-main-text {
-    margin: 0 10% 0 20%;
+    margin: 0 20%;
 }
 
 .end-screen-main-content {
-    margin: 0 10% 0 20%;
+    margin: 0 20%;
+    font-size: 20px;
+}
+
+.end-screen-main-content p {
+    margin: 10px 0 0 0;
+}
+
+#end-form {
+    display: flex;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+.initials {
+    margin: 0 10px;
+
+    flex-grow: 1;
+    font-size: 16px;
+}
+
+#submit-score {
+    padding: 7px 15px;
 }
 
 /* S6. High Scores */
@@ -114,4 +136,9 @@ header {
 #high-scores-buttons {
     display: flex;
     justify-content: left;
+}
+
+#high-scores-buttons button {
+    padding: 7px 15px;
+    margin-right: 10px;
 }
