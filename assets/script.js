@@ -35,19 +35,29 @@ var timerInterval;
 // S1-c. Quiz Questions Array
 var questions = [
     {
-        text: "Foo",
-        answers: ["wrong", "wrong", "right", "wrong"],
+        text: "If a variable is declared within a function, what kind of variable is it?",
+        answers: ["A global variable", "A local variable", "A constant variable", "A magic number"],
+        correct: 1
+    },
+    {
+        text: "Which of these methods cancels an interval?",
+        answers: ["stopInterval()", "breakInterval()", "clearInterval()", "endInterval()"],
         correct: 2
     },
     {
-        text: "Bar",
-        answers: ["right", "wrong", "wrong", "wrong"],
-        correct: 0
+        text: "Which of these values is not falsy?",
+        answers: ["\"\"", "0", "null", "\"false\""],
+        correct: 3
     },
     {
-        text: "Baz",
-        answers: ["wrong", "wrong", "wrong", "right"],
-        correct: 3
+        text: "Which of these expressions correctly initiates a for loop, assuming 'foo' is a valid integer?",
+        answers: ["for (var i === 0; i < foo; i++)", "for (var i = 0; i < foo; i++)", "for (var i = 0; i < foo; i++);", "for (var i = 0, i < foo, i++)", "for (var i = 0 | i < foo | i++)"],
+        correct: 1
+    },
+    {
+        text: "Which of these is NOT a default HTML attribute?",
+        answers: ["background-color", "width", "style", "rel"],
+        correct: 0
     }
 ];
 
@@ -92,10 +102,11 @@ var sortScores = function() {
 }
 
 var clearScores = function() {
-    localStorage.clear;
+    localStorage.clear();
     if (!scores) {
         scores = [];
     }
+    showHighScores();
 }
 
 // S2-b. Non-Quiz Sections
