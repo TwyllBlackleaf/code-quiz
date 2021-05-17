@@ -14,6 +14,7 @@
 // S1-a. Page Elements
 var mainTextEl = document.querySelector("#main-text");
 var mainContentEl = document.querySelector("#main-content");
+var timeDisplayEl = document.querySelector("#timer-display");
 var timeNumberEl = document.querySelector("#timer-number");
 var highScoresEl = document.querySelector("#high-scores");
 var highScoresTextEl = document.querySelector("#high-scores-text");
@@ -53,9 +54,10 @@ var questions = [
 // S2. Functions
 // S2-a. Utility
 var clearScreen = function() {
-    highScoresTextEl.textContent = "View High Scores";
+    highScoresTextEl.style.display = "block";
     mainTextEl.textContent = "";
     mainContentEl.textContent = "";
+    timeDisplayEl.style.display = "block";
     timeNumberEl.textContent = "0";
     i = 0;
     correctAnswer = "";
@@ -111,7 +113,10 @@ var startScreen = function() {
 
 var showHighScores = function() {
     clearScreen();
-    highScoresTextEl.textContent = "";
+
+    timeDisplayEl.style.display = "none";
+    highScoresTextEl.style.display = "none";
+
     mainTextEl.textContent = "High Scores";
     var scoresList = document.createElement("ol");
     scoresList.setAttribute("id", "high-scores");
