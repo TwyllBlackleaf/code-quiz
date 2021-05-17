@@ -71,6 +71,18 @@ var getScores = function() {
 }
 
 var sortScores = function() {
+    function compare(a, b) {
+        var scoreA = a.score;
+        var scoreB = b.score;
+        var comparison = 0;
+        if (scoreA > scoreB) {
+            comparison = -1;
+        } else if (scoreB > scoreA) {
+            comparison = 1;
+        }
+        return comparison;
+    }
+    scores.sort(compare);
 
 }
 
@@ -87,7 +99,6 @@ var startScreen = function() {
 }
 
 var showHighScores = function() {
-    console.log("High Scores link clicked");
     clearScreen();
     mainTextEl.textContent = "High Scores";
     var scoresList = document.createElement("ol");
@@ -95,9 +106,10 @@ var showHighScores = function() {
     mainContentEl.appendChild(scoresList);
 
     getScores();
-    for (var i = 0; i < scores.length; i++) {
+    sortScores();
+    for (var j = 0; j < scores.length; j++) {
         var scoreItem = document.createElement("li");
-        scoreItem.textContent = scores[i].initials + ": " + scores[i].score;
+        scoreItem.textContent = scores[j].initials + ": " + scores[j].score;
         scoresList.appendChild(scoreItem);
     }
     
@@ -130,6 +142,7 @@ var saveScore = function(event) {
             scores = [];
         }
         scores.push(scoreObj);
+        sortScores();
         saveScores();
 
         console.log(scoreObj);
