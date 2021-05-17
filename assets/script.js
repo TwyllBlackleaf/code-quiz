@@ -16,6 +16,7 @@ var mainTextEl = document.querySelector("#main-text");
 var mainContentEl = document.querySelector("#main-content");
 var timeNumberEl = document.querySelector("#timer-number");
 var highScoresEl = document.querySelector("#high-scores");
+var highScoresTextEl = document.querySelector("#high-scores-text");
 var correctDisplayEl = document.querySelector("#correct-answer-display");
 
 // S1-b. Global Variables
@@ -52,6 +53,7 @@ var questions = [
 // S2. Functions
 // S2-a. Utility
 var clearScreen = function() {
+    highScoresTextEl.textContent = "View High Scores";
     mainTextEl.textContent = "";
     mainContentEl.textContent = "";
     timeNumberEl.textContent = "0";
@@ -59,6 +61,7 @@ var clearScreen = function() {
     correctAnswer = "";
     clearInterval(timerInterval);
     timeLeft = 75;
+
 }
 
 var saveScores = function() {
@@ -86,8 +89,16 @@ var sortScores = function() {
 
 }
 
+var clearScores = function() {
+    localStorage.clear;
+    if (!scores) {
+        scores = [];
+    }
+}
+
 // S2-b. Non-Quiz Sections
 var startScreen = function() {
+    clearScreen();
     mainTextEl.textContent = "Coding Quiz Challenge";
     mainContentEl.textContent = "Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!";
     timeNumberEl.textContent = "0";
@@ -100,20 +111,38 @@ var startScreen = function() {
 
 var showHighScores = function() {
     clearScreen();
+    highScoresTextEl.textContent = "";
     mainTextEl.textContent = "High Scores";
     var scoresList = document.createElement("ol");
     scoresList.setAttribute("id", "high-scores");
     mainContentEl.appendChild(scoresList);
 
     getScores();
-    sortScores();
-    for (var j = 0; j < scores.length; j++) {
-        var scoreItem = document.createElement("li");
-        scoreItem.textContent = scores[j].initials + ": " + scores[j].score;
-        scoresList.appendChild(scoreItem);
+
+    if (scores) {
+        sortScores();
+
+        for (var j = 0; j < scores.length; j++) {
+            var scoreItem = document.createElement("li");
+            scoreItem.textContent = scores[j].initials + ": " + scores[j].score;
+            scoresList.appendChild(scoreItem);
+        }  
     }
     
-    
+    var highScoresButtons = document.createElement("div");
+    highScoresButtons.setAttribute("id", "high-scores-buttons");
+    mainContentEl.appendChild(highScoresButtons);
+
+    var backButtonEl = document.createElement("button");
+    backButtonEl.textContent = "Go back";
+    highScoresButtons.appendChild(backButtonEl);
+    backButtonEl.addEventListener("click", startScreen);
+
+    var clearButtonEl = document.createElement("button");
+    clearButtonEl.textContent = "Clear high scores";
+    highScoresButtons.appendChild(clearButtonEl);
+    clearButtonEl.addEventListener("click", clearScores);
+
 }
 
 var endScreen = function() {
