@@ -101,6 +101,10 @@ var clearScores = function() {
 // S2-b. Non-Quiz Sections
 var startScreen = function() {
     clearScreen();
+
+    mainTextEl.setAttribute("class", "start-screen-main-text");
+    mainContentEl.setAttribute("class", "start-screen-main-content");
+
     mainTextEl.textContent = "Coding Quiz Challenge";
     mainContentEl.textContent = "Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!";
     timeNumberEl.textContent = "0";
@@ -114,16 +118,18 @@ var startScreen = function() {
 var showHighScores = function() {
     clearScreen();
 
+    mainTextEl.setAttribute("class", "high-scores-main-text");
+    mainContentEl.setAttribute("class", "high-scores-main-content");
+
     timeDisplayEl.style.display = "none";
     highScoresTextEl.style.display = "none";
 
     mainTextEl.textContent = "High Scores";
     var scoresList = document.createElement("ol");
-    scoresList.setAttribute("id", "high-scores");
+    scoresList.setAttribute("id", "high-scores-list");
     mainContentEl.appendChild(scoresList);
 
     getScores();
-
     if (scores) {
         sortScores();
 
@@ -153,6 +159,9 @@ var showHighScores = function() {
 var endScreen = function() {
     tempScore = timeLeft;
     clearScreen();
+
+    mainTextEl.setAttribute("class", "end-screen-main-text");
+    mainContentEl.setAttribute("class", "end-screen-main-content");
     mainTextEl.textContent = "All done!";
     mainContentEl.innerHTML = "<form class='end-form' id='end-form'><p>Your final score is " + tempScore + ".</p>Enter initials: " +  
         "<input type='text' name='initials' class='initials' placeholder='ABC' />" + 
@@ -203,6 +212,10 @@ var quizLoop = function() {
         endScreen();
         return;
     }
+
+    // Set the classes of the content divs for styling
+    mainTextEl.setAttribute("class", "quiz-loop-main-text");
+    mainContentEl.setAttribute("class", "quiz-loop-main-content");
 
     // Display the question's text
     mainTextEl.textContent = questions[i].text;
