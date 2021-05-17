@@ -219,7 +219,7 @@ var quizLoop = function() {
 
     // Display the question's text
     mainTextEl.textContent = questions[i].text;
-    mainContentEl.innerHTML = "<ul class='answers' id='answers'></ul>";
+    mainContentEl.innerHTML = "<ul class='answers-list' id='answers-list'></ul>";
 
     // Add answer buttons
     for (var j = 0; j < questions[i].answers.length; j++) {
@@ -235,7 +235,7 @@ var quizLoop = function() {
         }
 
         // Append to the <ul>
-        var answersList = document.querySelector("#answers");
+        var answersList = document.querySelector("#answers-list");
         answersList.appendChild(answerButton);
 
         // Add event listener 
